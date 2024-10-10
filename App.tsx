@@ -1,12 +1,14 @@
 import './global.css';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { vars } from 'nativewind';
+import { useState } from 'react';
 
 const config = {
   light: vars({ '--brand-color': 'red' }),
   dark: vars({ '--brand-color': 'blue' }),
 };
 export default function App() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <View
       style={[
@@ -20,14 +22,18 @@ export default function App() {
           gap: 10,
         },
       ]}>
-      <View className="shadow">
-        <View className="h-7 w-7 border-2 border-red-500 bg-[--brand-color]"></View>
-      </View>
-      <Text>with Shadow</Text>
-      <View>
-        <View className="h-7 w-7 border-2 border-red-500 bg-[--brand-color]" />
-      </View>
-      <Text>without Shadow</Text>
+      <Pressable
+        className="rounded-lg bg-gray-700 p-5"
+        onPress={() => {
+          setIsOpen((prev) => !prev);
+        }}>
+        <Text className="text-white">Toggle Text</Text>
+      </Pressable>
+      {isOpen && (
+        <Text className="text-base text-[--brand-color]">
+          Text with Variable color and text-base
+        </Text>
+      )}
     </View>
   );
 }
